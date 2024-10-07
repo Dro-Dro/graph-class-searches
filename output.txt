@@ -1,0 +1,1654 @@
+Mon May  1 19:26:40 PDT 2023
+Linux csslab4 4.18.0-425.3.1.el8.x86_64 #1 SMP Wed Nov 9 20:13:27 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux
+uid=1095404(hpeter4) gid=2121095404(hpeter4) groups=2121095404(hpeter4),605559(lab-access)
+=====================================================
+1. Compiles without warnings with -Wall -Wextra flags
+=====================================================
+graph.cpp: In member function ‘void Graph::bfs(const string&, void (*)(const string&))’:
+graph.cpp:169:48: warning: unused parameter ‘visit’ [-Wunused-parameter]
+ void Graph::bfs(const string &startLabel, void visit(const string &label)) {
+                                           ~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+graph.cpp: In member function ‘int Graph::mstPrim(const string&, void (*)(const string&, const string&, int)) const’:
+graph.cpp:220:25: warning: unused parameter ‘visit’ [-Wunused-parameter]
+                    void visit(const string &from, const string &to,
+                    ~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                               int weight)) const {
+                               ~~~~~~~~~~~
+graph.cpp: In member function ‘int Graph::mstKruskal(const string&, void (*)(const string&, const string&, int)) const’:
+graph.cpp:248:37: warning: unused parameter ‘startLabel’ [-Wunused-parameter]
+ int Graph::mstKruskal(const string &startLabel,
+                       ~~~~~~~~~~~~~~^~~~~~~~~~
+graph.cpp:249:28: warning: unused parameter ‘visit’ [-Wunused-parameter]
+                       void visit(const string &from, const string &to,
+                       ~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                  int weight)) const {
+                                  ~~~~~~~~~~~
+=====================================================
+2. Runs and produces correct output
+=====================================================
+testGraph0DFS
+testGraph0BFS
+testGraph0Dijkstra
+testGraph0NotDirected
+testGraph1
+Done!
+=====================================================
+3. clang-tidy warnings are fixed
+=====================================================
+71111 warnings generated.
+130448 warnings generated.
+166761 warnings generated.
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:2:1: error: system include algorithm not allowed [llvmlibc-restrict-system-libc-headers,-warnings-as-errors]
+#include <algorithm>
+^~~~~~~~~~~~~~~~~~~~
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:3:1: error: system include cstring not allowed [llvmlibc-restrict-system-libc-headers,-warnings-as-errors]
+#include <cstring>
+^~~~~~~~~~~~~~~~~~
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:4:1: error: system include fstream not allowed [llvmlibc-restrict-system-libc-headers,-warnings-as-errors]
+#include <fstream>
+^~~~~~~~~~~~~~~~~~
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:5:1: error: system include functional not allowed [llvmlibc-restrict-system-libc-headers,-warnings-as-errors]
+#include <functional>
+^~~~~~~~~~~~~~~~~~~~~
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:6:1: error: system include iostream not allowed [llvmlibc-restrict-system-libc-headers,-warnings-as-errors]
+#include <iostream>
+^~~~~~~~~~~~~~~~~~~
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:7:1: error: system include limits not allowed [llvmlibc-restrict-system-libc-headers,-warnings-as-errors]
+#include <limits>
+^~~~~~~~~~~~~~~~~
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:8:1: error: system include map not allowed [llvmlibc-restrict-system-libc-headers,-warnings-as-errors]
+#include <map>
+^~~~~~~~~~~~~~
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:9:1: error: system include queue not allowed [llvmlibc-restrict-system-libc-headers,-warnings-as-errors]
+#include <queue>
+^~~~~~~~~~~~~~~~
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:10:1: error: system include set not allowed [llvmlibc-restrict-system-libc-headers,-warnings-as-errors]
+#include <set>
+^~~~~~~~~~~~~~
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:11:1: error: system include string not allowed [llvmlibc-restrict-system-libc-headers,-warnings-as-errors]
+#include <string>
+^~~~~~~~~~~~~~~~~
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:12:1: error: system include unordered_map not allowed [llvmlibc-restrict-system-libc-headers,-warnings-as-errors]
+#include <unordered_map>
+^~~~~~~~~~~~~~~~~~~~~~~~
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:13:1: error: system include utility not allowed [llvmlibc-restrict-system-libc-headers,-warnings-as-errors]
+#include <utility>
+^~~~~~~~~~~~~~~~~~
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:14:1: error: system include vector not allowed [llvmlibc-restrict-system-libc-headers,-warnings-as-errors]
+#include <vector>
+^~~~~~~~~~~~~~~~~
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:16:17: error: declaration must be declared within the '__llvm_libc' namespace [llvmlibc-implementation-in-namespace,-warnings-as-errors]
+using namespace std;
+                ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:20:8: error: declaration must be declared within the '__llvm_libc' namespace [llvmlibc-implementation-in-namespace,-warnings-as-errors]
+Graph::Graph(bool directionalEdges) { isDirectional = directionalEdges; }
+       ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:20:39: error: 'isDirectional' should be initialized in a member initializer of the constructor [cppcoreguidelines-prefer-member-initializer,-warnings-as-errors]
+Graph::Graph(bool directionalEdges) { isDirectional = directionalEdges; }
+                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                    : isDirectional(directionalEdges)
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:23:8: error: declaration must be declared within the '__llvm_libc' namespace [llvmlibc-implementation-in-namespace,-warnings-as-errors]
+Graph::~Graph() {
+       ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:24:3: error: kernel performance could be improved by unrolling this loop with a '#pragma unroll' directive [altera-unroll-loops,-warnings-as-errors]
+  for (auto &s : vertices) {
+  ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:24:14: error: variable name 's' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+  for (auto &s : vertices) {
+             ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:24:16: error: 'operator!=' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  for (auto &s : vertices) {
+               ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_tree.h:320:7: note: resolves to this declaration
+      operator!=(const _Self& __x, const _Self& __y) _GLIBCXX_NOEXCEPT
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:24:16: error: 'operator*' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  for (auto &s : vertices) {
+               ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_tree.h:277:7: note: resolves to this declaration
+      operator*() const _GLIBCXX_NOEXCEPT
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:24:16: error: 'operator++' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  for (auto &s : vertices) {
+               ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_tree.h:285:7: note: resolves to this declaration
+      operator++() _GLIBCXX_NOEXCEPT
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:27:3: error: kernel performance could be improved by unrolling this loop with a '#pragma unroll' directive [altera-unroll-loops,-warnings-as-errors]
+  for (auto &j : edges) {
+  ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:27:14: error: variable name 'j' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+  for (auto &j : edges) {
+             ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:27:16: error: 'operator!=<Edge **, std::vector<Edge *>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  for (auto &j : edges) {
+               ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_iterator.h:1237:5: note: resolves to this declaration
+    operator!=(const __normal_iterator<_Iterator, _Container>& __lhs,
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:27:16: error: 'operator*' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  for (auto &j : edges) {
+               ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_iterator.h:1095:7: note: resolves to this declaration
+      operator*() const _GLIBCXX_NOEXCEPT
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:27:16: error: 'operator++' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  for (auto &j : edges) {
+               ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_iterator.h:1105:7: note: resolves to this declaration
+      operator++() _GLIBCXX_NOEXCEPT
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:33:12: error: declaration must be declared within the '__llvm_libc' namespace [llvmlibc-implementation-in-namespace,-warnings-as-errors]
+int Graph::verticesSize() const { return vertices.size(); }
+           ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:33:42: error: narrowing conversion from 'std::map<std::basic_string<char>, Vertex *>::size_type' (aka 'unsigned long') to signed type 'int' is implementation-defined [bugprone-narrowing-conversions,cppcoreguidelines-narrowing-conversions,-warnings-as-errors]
+int Graph::verticesSize() const { return vertices.size(); }
+                                         ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:36:12: error: declaration must be declared within the '__llvm_libc' namespace [llvmlibc-implementation-in-namespace,-warnings-as-errors]
+int Graph::edgesSize() const { return edges.size(); }
+           ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:36:39: error: narrowing conversion from 'std::vector::size_type' (aka 'unsigned long') to signed type 'int' is implementation-defined [bugprone-narrowing-conversions,cppcoreguidelines-narrowing-conversions,-warnings-as-errors]
+int Graph::edgesSize() const { return edges.size(); }
+                                      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:39:12: error: declaration must be declared within the '__llvm_libc' namespace [llvmlibc-implementation-in-namespace,-warnings-as-errors]
+int Graph::vertexDegree(const string &label) const {
+           ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:41:12: error: narrowing conversion from 'std::vector::size_type' (aka 'unsigned long') to signed type 'int' is implementation-defined [bugprone-narrowing-conversions,cppcoreguidelines-narrowing-conversions,-warnings-as-errors]
+    return vertices.at(label)->connectedVerts.size();
+           ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:42:5: error: do not use 'else' after 'return' [llvm-else-after-return,readability-else-after-return,-warnings-as-errors]
+  } else {
+    ^~~~~~
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:48:13: error: declaration must be declared within the '__llvm_libc' namespace [llvmlibc-implementation-in-namespace,-warnings-as-errors]
+bool Graph::add(const string &label) {
+            ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:51:5: error: do not use 'else' after 'return' [llvm-else-after-return,readability-else-after-return,-warnings-as-errors]
+  } else {
+    ^~~~~~
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:52:5: error: use auto when initializing with new to avoid duplicating the type name [hicpp-use-auto,modernize-use-auto,-warnings-as-errors]
+    Vertex *new_vertex = new Vertex();
+    ^
+note: this fix will not be applied because it overlaps with another fix
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:52:13: error: invalid case style for variable 'new_vertex' [readability-identifier-naming,-warnings-as-errors]
+    Vertex *new_vertex = new Vertex();
+            ^
+note: this fix will not be applied because it overlaps with another fix
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:53:23: error: 'operator=' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    new_vertex->label = label;
+                      ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/basic_string.h:802:7: note: resolves to this declaration
+      operator=(const basic_string& __str)
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:54:13: error: 'operator[]' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    vertices[label] = new_vertex;
+            ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_map.h:502:7: note: resolves to this declaration
+      operator[](const key_type& __k)
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:60:13: error: declaration must be declared within the '__llvm_libc' namespace [llvmlibc-implementation-in-namespace,-warnings-as-errors]
+bool Graph::contains(const string &label) const {
+            ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:62:12: error: redundant boolean literal in conditional return statement [readability-simplify-boolean-expr,-warnings-as-errors]
+    return true;
+~~~~~~~~~~~^~~~~
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:63:5: error: do not use 'else' after 'return' [llvm-else-after-return,readability-else-after-return,-warnings-as-errors]
+  } else {
+    ^~~~
+note: this fix will not be applied because it overlaps with another fix
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:69:13: error: declaration must be declared within the '__llvm_libc' namespace [llvmlibc-implementation-in-namespace,-warnings-as-errors]
+bool Graph::containsEdge(const string &from, const string &to,
+            ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:69:60: error: parameter name 'to' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+bool Graph::containsEdge(const string &from, const string &to,
+                                                           ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:72:18: error: 'operator=' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  checkEdge.from = from;
+                 ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/basic_string.h:802:7: note: resolves to this declaration
+      operator=(const basic_string& __str)
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:73:16: error: 'operator=' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  checkEdge.to = to;
+               ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/basic_string.h:802:7: note: resolves to this declaration
+      operator=(const basic_string& __str)
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:75:3: error: kernel performance could be improved by unrolling this loop with a '#pragma unroll' directive [altera-unroll-loops,-warnings-as-errors]
+  for (auto &s : edges) {
+  ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:75:3: error: replace loop by 'std::any_of()' [readability-use-anyofallof,-warnings-as-errors]
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:75:8: error: 'auto &s' can be declared as 'const auto &s' [readability-qualified-auto,-warnings-as-errors]
+  for (auto &s : edges) {
+       ^
+       const 
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:75:14: error: variable name 's' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+  for (auto &s : edges) {
+             ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:75:16: error: 'operator!=<Edge *const *, std::vector<Edge *>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  for (auto &s : edges) {
+               ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_iterator.h:1237:5: note: resolves to this declaration
+    operator!=(const __normal_iterator<_Iterator, _Container>& __lhs,
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:75:16: error: 'operator*' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  for (auto &s : edges) {
+               ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_iterator.h:1095:7: note: resolves to this declaration
+      operator*() const _GLIBCXX_NOEXCEPT
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:75:16: error: 'operator++' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  for (auto &s : edges) {
+               ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_iterator.h:1105:7: note: resolves to this declaration
+      operator++() _GLIBCXX_NOEXCEPT
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:76:17: error: 'operator==<char>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    if (s->from == checkEdge.from && s->to == checkEdge.to) {
+                ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/basic_string.h:3583:5: note: resolves to this declaration
+    operator==(const basic_string<_CharT>& __lhs,
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:76:44: error: 'operator==<char>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    if (s->from == checkEdge.from && s->to == checkEdge.to) {
+                                           ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/basic_string.h:3583:5: note: resolves to this declaration
+    operator==(const basic_string<_CharT>& __lhs,
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:85:15: error: declaration must be declared within the '__llvm_libc' namespace [llvmlibc-implementation-in-namespace,-warnings-as-errors]
+string Graph::getEdgesAsString(const string &label) const {
+              ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:88:5: error: do not use 'else' after 'return' [llvm-else-after-return,readability-else-after-return,-warnings-as-errors]
+  } else {
+    ^~~~~~
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:89:25: error: variable name 'z' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+    map<string, string> z;
+                        ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:90:12: error: variable name 'p' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+    string p;
+           ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:91:5: error: kernel performance could be improved by unrolling this loop with a '#pragma unroll' directive [altera-unroll-loops,-warnings-as-errors]
+    for (auto &s : vertices.at(label)->connectedVerts) {
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:91:16: error: variable name 's' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+    for (auto &s : vertices.at(label)->connectedVerts) {
+               ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:91:18: error: 'operator!=<std::pair<Vertex *, int> *, std::vector<std::pair<Vertex *, int>>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    for (auto &s : vertices.at(label)->connectedVerts) {
+                 ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_iterator.h:1237:5: note: resolves to this declaration
+    operator!=(const __normal_iterator<_Iterator, _Container>& __lhs,
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:91:18: error: 'operator*' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    for (auto &s : vertices.at(label)->connectedVerts) {
+                 ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_iterator.h:1095:7: note: resolves to this declaration
+      operator*() const _GLIBCXX_NOEXCEPT
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:91:18: error: 'operator++' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    for (auto &s : vertices.at(label)->connectedVerts) {
+                 ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_iterator.h:1105:7: note: resolves to this declaration
+      operator++() _GLIBCXX_NOEXCEPT
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:92:14: error: variable name 'o' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+      string o;
+             ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:93:9: error: 'operator+=' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+      o += s.first->label + "(";
+        ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/basic_string.h:1328:7: note: resolves to this declaration
+      operator+=(const basic_string& __str)
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:93:27: error: 'operator+<char, std::char_traits<char>, std::allocator<char>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+      o += s.first->label + "(";
+                          ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/basic_string.h:3471:5: note: resolves to this declaration
+    operator+(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:94:9: error: 'operator+=' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+      o += to_string(s.second);
+        ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/basic_string.h:1328:7: note: resolves to this declaration
+      operator+=(const basic_string& __str)
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:94:12: error: 'to_string' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+      o += to_string(s.second);
+           ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/basic_string.h:4011:3: note: resolves to this declaration
+  to_string(int __val)
+  ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:95:9: error: 'operator+=' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+      o += "),";
+        ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/basic_string.h:1338:7: note: resolves to this declaration
+      operator+=(const _CharT* __s)
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:96:8: error: 'operator[]' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+      z[s.first->label] = o;
+       ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_map.h:502:7: note: resolves to this declaration
+      operator[](const key_type& __k)
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:96:25: error: 'operator=' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+      z[s.first->label] = o;
+                        ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/basic_string.h:802:7: note: resolves to this declaration
+      operator=(const basic_string& __str)
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:98:5: error: kernel performance could be improved by unrolling this loop with a '#pragma unroll' directive [altera-unroll-loops,-warnings-as-errors]
+    for (auto &i : z) {
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:98:16: error: variable name 'i' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+    for (auto &i : z) {
+               ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:98:18: error: 'operator!=' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    for (auto &i : z) {
+                 ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_tree.h:320:7: note: resolves to this declaration
+      operator!=(const _Self& __x, const _Self& __y) _GLIBCXX_NOEXCEPT
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:98:18: error: 'operator*' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    for (auto &i : z) {
+                 ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_tree.h:277:7: note: resolves to this declaration
+      operator*() const _GLIBCXX_NOEXCEPT
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:98:18: error: 'operator++' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    for (auto &i : z) {
+                 ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_tree.h:285:7: note: resolves to this declaration
+      operator++() _GLIBCXX_NOEXCEPT
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:99:9: error: 'operator+=' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+      p += i.second;
+        ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/basic_string.h:1328:7: note: resolves to this declaration
+      operator+=(const basic_string& __str)
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:101:7: error: 'operator=' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    p = p.substr(0, p.size() - 1);
+      ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/basic_string.h:843:7: note: resolves to this declaration
+      operator=(basic_string&& __str)
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:107:13: error: declaration must be declared within the '__llvm_libc' namespace [llvmlibc-implementation-in-namespace,-warnings-as-errors]
+bool Graph::connect(const string &from, const string &to, int weight) {
+            ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:107:13: error: function 'connect' is within a recursive call chain [misc-no-recursion,-warnings-as-errors]
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:107:13: note: example recursive call chain, starting from function 'connect'
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:127:7: note: Frame #1: function 'connect' calls function 'connect' here:
+      connect(to, from, weight);
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:127:7: note: ... which was the starting point of the recursive call chain; there may be other cycles
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:107:55: error: parameter name 'to' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+bool Graph::connect(const string &from, const string &to, int weight) {
+                                                      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:108:46: error: 'operator==<char>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  if (containsEdge(from, to, weight) || from == to) {
+                                             ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/basic_string.h:3583:5: note: resolves to this declaration
+    operator==(const basic_string<_CharT>& __lhs,
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:110:5: error: do not use 'else' after 'return' [llvm-else-after-return,readability-else-after-return,-warnings-as-errors]
+  } else {
+    ^~~~~~
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:117:11: error: invalid case style for variable 'new_edge' [readability-identifier-naming,-warnings-as-errors]
+    Edge *new_edge = new Edge();
+          ^
+note: this fix will not be applied because it overlaps with another fix
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:118:20: error: 'operator=' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    new_edge->from = from;
+                   ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/basic_string.h:802:7: note: resolves to this declaration
+      operator=(const basic_string& __str)
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:119:18: error: 'operator=' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    new_edge->to = to;
+                 ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/basic_string.h:802:7: note: resolves to this declaration
+      operator=(const basic_string& __str)
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:123:29: error: 'operator[]' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    conVert.first = vertices[to];
+                            ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_map.h:502:7: note: resolves to this declaration
+      operator[](const key_type& __k)
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:125:13: error: 'operator[]' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    vertices[from]->connectedVerts.push_back(conVert);
+            ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_map.h:502:7: note: resolves to this declaration
+      operator[](const key_type& __k)
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:133:13: error: declaration must be declared within the '__llvm_libc' namespace [llvmlibc-implementation-in-namespace,-warnings-as-errors]
+bool Graph::disconnect(const string &from, const string &to) {
+            ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:133:13: error: function 'disconnect' is within a recursive call chain [misc-no-recursion,-warnings-as-errors]
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:133:13: note: example recursive call chain, starting from function 'disconnect'
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:152:7: note: Frame #1: function 'disconnect' calls function 'disconnect' here:
+      disconnect(to, from);
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:152:7: note: ... which was the starting point of the recursive call chain; there may be other cycles
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:133:58: error: parameter name 'to' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+bool Graph::disconnect(const string &from, const string &to) {
+                                                         ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:134:39: error: 'operator==<char>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  if (!containsEdge(from, to) || from == to) {
+                                      ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/basic_string.h:3583:5: note: resolves to this declaration
+    operator==(const basic_string<_CharT>& __lhs,
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:136:5: error: do not use 'else' after 'return' [llvm-else-after-return,readability-else-after-return,-warnings-as-errors]
+  } else {
+    ^~~~~~
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:137:5: error: kernel performance could be improved by unrolling this loop with a '#pragma unroll' directive [altera-unroll-loops,-warnings-as-errors]
+    for (auto &s : edges) {
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:137:16: error: variable name 's' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+    for (auto &s : edges) {
+               ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:137:18: error: 'operator!=<Edge **, std::vector<Edge *>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    for (auto &s : edges) {
+                 ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_iterator.h:1237:5: note: resolves to this declaration
+    operator!=(const __normal_iterator<_Iterator, _Container>& __lhs,
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:137:18: error: 'operator*' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    for (auto &s : edges) {
+                 ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_iterator.h:1095:7: note: resolves to this declaration
+      operator*() const _GLIBCXX_NOEXCEPT
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:137:18: error: 'operator++' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    for (auto &s : edges) {
+                 ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_iterator.h:1105:7: note: resolves to this declaration
+      operator++() _GLIBCXX_NOEXCEPT
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:138:19: error: 'operator==<char>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+      if (s->from == from && s->to == to) {
+                  ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/basic_string.h:3583:5: note: resolves to this declaration
+    operator==(const basic_string<_CharT>& __lhs,
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:138:36: error: 'operator==<char>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+      if (s->from == from && s->to == to) {
+                                   ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/basic_string.h:3583:5: note: resolves to this declaration
+    operator==(const basic_string<_CharT>& __lhs,
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:140:21: error: 'find<__gnu_cxx::__normal_iterator<Edge **, std::vector<Edge *>>, Edge *>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+        edges.erase(find(edges.begin(), edges.end(), s));
+                    ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_algo.h:3843:5: note: resolves to this declaration
+    find(_InputIterator __first, _InputIterator __last,
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:143:5: error: kernel performance could be improved by unrolling this loop with a '#pragma unroll' directive [altera-unroll-loops,-warnings-as-errors]
+    for (auto &s : vertices.at(from)->connectedVerts) {
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:143:16: error: variable name 's' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+    for (auto &s : vertices.at(from)->connectedVerts) {
+               ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:143:18: error: 'operator!=<std::pair<Vertex *, int> *, std::vector<std::pair<Vertex *, int>>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    for (auto &s : vertices.at(from)->connectedVerts) {
+                 ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_iterator.h:1237:5: note: resolves to this declaration
+    operator!=(const __normal_iterator<_Iterator, _Container>& __lhs,
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:143:18: error: 'operator*' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    for (auto &s : vertices.at(from)->connectedVerts) {
+                 ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_iterator.h:1095:7: note: resolves to this declaration
+      operator*() const _GLIBCXX_NOEXCEPT
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:143:18: error: 'operator++' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    for (auto &s : vertices.at(from)->connectedVerts) {
+                 ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_iterator.h:1105:7: note: resolves to this declaration
+      operator++() _GLIBCXX_NOEXCEPT
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:144:26: error: 'operator==<char>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+      if (s.first->label == to) {
+                         ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/basic_string.h:3583:5: note: resolves to this declaration
+    operator==(const basic_string<_CharT>& __lhs,
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:146:17: error: 'operator[]' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+        vertices[from]->connectedVerts.erase(
+                ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_map.h:502:7: note: resolves to this declaration
+      operator[](const key_type& __k)
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:147:13: error: 'find<__gnu_cxx::__normal_iterator<std::pair<Vertex *, int> *, std::vector<std::pair<Vertex *, int>>>, std::pair<Vertex *, int>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+            find(vertices[from]->connectedVerts.begin(),
+            ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_algo.h:3843:5: note: resolves to this declaration
+    find(_InputIterator __first, _InputIterator __last,
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:147:26: error: 'operator[]' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+            find(vertices[from]->connectedVerts.begin(),
+                         ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_map.h:502:7: note: resolves to this declaration
+      operator[](const key_type& __k)
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:148:26: error: 'operator[]' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+                 vertices[from]->connectedVerts.end(), s));
+                         ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_map.h:502:7: note: resolves to this declaration
+      operator[](const key_type& __k)
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:159:13: error: declaration must be declared within the '__llvm_libc' namespace [llvmlibc-implementation-in-namespace,-warnings-as-errors]
+void Graph::dfs(const string &startLabel, void visit(const string &label)) {
+            ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:159:13: error: function 'dfs' is within a recursive call chain [misc-no-recursion,-warnings-as-errors]
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:159:13: note: example recursive call chain, starting from function 'dfs'
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:163:7: note: Frame #1: function 'dfs' calls function 'dfs' here:
+      dfs(s.first->label, visit);
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:163:7: note: ... which was the starting point of the recursive call chain; there may be other cycles
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:160:10: error: 'operator[]' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  visited[startLabel] = true;
+         ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_map.h:502:7: note: resolves to this declaration
+      operator[](const key_type& __k)
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:161:3: error: kernel performance could be improved by unrolling this loop with a '#pragma unroll' directive [altera-unroll-loops,-warnings-as-errors]
+  for (auto &s : vertices.at(startLabel)->connectedVerts) {
+  ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:161:14: error: variable name 's' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+  for (auto &s : vertices.at(startLabel)->connectedVerts) {
+             ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:161:16: error: 'operator!=<std::pair<Vertex *, int> *, std::vector<std::pair<Vertex *, int>>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  for (auto &s : vertices.at(startLabel)->connectedVerts) {
+               ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_iterator.h:1237:5: note: resolves to this declaration
+    operator!=(const __normal_iterator<_Iterator, _Container>& __lhs,
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:161:16: error: 'operator*' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  for (auto &s : vertices.at(startLabel)->connectedVerts) {
+               ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_iterator.h:1095:7: note: resolves to this declaration
+      operator*() const _GLIBCXX_NOEXCEPT
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:161:16: error: 'operator++' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  for (auto &s : vertices.at(startLabel)->connectedVerts) {
+               ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_iterator.h:1105:7: note: resolves to this declaration
+      operator++() _GLIBCXX_NOEXCEPT
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:169:13: error: declaration must be declared within the '__llvm_libc' namespace [llvmlibc-implementation-in-namespace,-warnings-as-errors]
+void Graph::bfs(const string &startLabel, void visit(const string &label)) {
+            ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:169:48: error: parameter 'visit' is unused [misc-unused-parameters,-warnings-as-errors]
+void Graph::bfs(const string &startLabel, void visit(const string &label)) {
+                                               ^~~~~
+                                                /*visit*/
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:170:17: error: variable name 'q' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+  queue<string> q;
+                ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:172:10: error: 'operator[]' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  visited[startLabel] = true;
+         ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_map.h:502:7: note: resolves to this declaration
+      operator[](const key_type& __k)
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:174:12: error: variable name 'u' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+    string u = q.front();
+           ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:176:5: error: kernel performance could be improved by unrolling this loop with a '#pragma unroll' directive [altera-unroll-loops,-warnings-as-errors]
+    for (auto &s : vertices.at(startLabel)->connectedVerts) {
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:176:16: error: variable name 's' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+    for (auto &s : vertices.at(startLabel)->connectedVerts) {
+               ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:176:18: error: 'operator!=<std::pair<Vertex *, int> *, std::vector<std::pair<Vertex *, int>>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    for (auto &s : vertices.at(startLabel)->connectedVerts) {
+                 ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_iterator.h:1237:5: note: resolves to this declaration
+    operator!=(const __normal_iterator<_Iterator, _Container>& __lhs,
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:176:18: error: 'operator*' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    for (auto &s : vertices.at(startLabel)->connectedVerts) {
+                 ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_iterator.h:1095:7: note: resolves to this declaration
+      operator*() const _GLIBCXX_NOEXCEPT
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:176:18: error: 'operator++' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    for (auto &s : vertices.at(startLabel)->connectedVerts) {
+                 ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_iterator.h:1105:7: note: resolves to this declaration
+      operator++() _GLIBCXX_NOEXCEPT
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:178:16: error: 'operator[]' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+        visited[s.first->label] = true;
+               ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_map.h:502:7: note: resolves to this declaration
+      operator[](const key_type& __k)
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:188:8: error: declaration must be declared within the '__llvm_libc' namespace [llvmlibc-implementation-in-namespace,-warnings-as-errors]
+Graph::dijkstra(const string &startLabel) const {
+       ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:193:18: error: 'make_pair<const std::basic_string<char> &, int>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  extract.insert(make_pair(startLabel, 0));
+                 ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_pair.h:741:5: note: resolves to this declaration
+    make_pair(_T1&& __x, _T2&& __y)
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:195:16: error: 'operator[]' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  weightsInPath[startLabel] = 0;
+               ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_map.h:502:7: note: resolves to this declaration
+      operator[](const key_type& __k)
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:198:29: error: 'operator*' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    pair<string, int> tmp = *(extract.begin());
+                            ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_tree.h:358:7: note: resolves to this declaration
+      operator*() const _GLIBCXX_NOEXCEPT
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:200:12: error: variable name 'u' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+    string u = tmp.first;
+           ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:201:5: error: kernel performance could be improved by unrolling this loop with a '#pragma unroll' directive [altera-unroll-loops,-warnings-as-errors]
+    for (auto &s : vertices.at(u)->connectedVerts) {
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:201:16: error: variable name 's' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+    for (auto &s : vertices.at(u)->connectedVerts) {
+               ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:201:18: error: 'operator!=<std::pair<Vertex *, int> *, std::vector<std::pair<Vertex *, int>>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    for (auto &s : vertices.at(u)->connectedVerts) {
+                 ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_iterator.h:1237:5: note: resolves to this declaration
+    operator!=(const __normal_iterator<_Iterator, _Container>& __lhs,
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:201:18: error: 'operator*' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    for (auto &s : vertices.at(u)->connectedVerts) {
+                 ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_iterator.h:1095:7: note: resolves to this declaration
+      operator*() const _GLIBCXX_NOEXCEPT
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:201:18: error: 'operator++' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    for (auto &s : vertices.at(u)->connectedVerts) {
+                 ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_iterator.h:1105:7: note: resolves to this declaration
+      operator++() _GLIBCXX_NOEXCEPT
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:202:14: error: variable name 'v' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+      string v = s.first->label;
+             ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:204:38: error: 'operator[]' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+      if (currentPath > weightsInPath[u] + weight) {
+                                     ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_map.h:502:7: note: resolves to this declaration
+      operator[](const key_type& __k)
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:206:38: error: 'make_pair<std::basic_string<char> &, int &>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+          extract.erase(extract.find(make_pair(v, weight)));
+                                     ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_pair.h:741:5: note: resolves to this declaration
+    make_pair(_T1&& __x, _T2&& __y)
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:208:36: error: 'operator[]' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+        currentPath = weightsInPath[u] + weight;
+                                   ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_map.h:502:7: note: resolves to this declaration
+      operator[](const key_type& __k)
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:209:24: error: 'make_pair<std::basic_string<char> &, int &>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+        extract.insert(make_pair(v, weight));
+                       ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_pair.h:741:5: note: resolves to this declaration
+    make_pair(_T1&& __x, _T2&& __y)
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:210:16: error: 'operator[]' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+        weights[v] = weight;
+               ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_map.h:502:7: note: resolves to this declaration
+      operator[](const key_type& __k)
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:211:17: error: 'operator[]' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+        previous[v] = u;
+                ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_map.h:502:7: note: resolves to this declaration
+      operator[](const key_type& __k)
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:211:21: error: 'operator=' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+        previous[v] = u;
+                    ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/basic_string.h:802:7: note: resolves to this declaration
+      operator=(const basic_string& __str)
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:215:10: error: 'make_pair<std::map<std::basic_string<char>, int> &, std::map<std::basic_string<char>, std::basic_string<char>> &>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  return make_pair(weights, previous);
+         ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_pair.h:741:5: note: resolves to this declaration
+    make_pair(_T1&& __x, _T2&& __y)
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:219:12: error: declaration must be declared within the '__llvm_libc' namespace [llvmlibc-implementation-in-namespace,-warnings-as-errors]
+int Graph::mstPrim(const string &startLabel,
+           ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:220:25: error: parameter 'visit' is unused [misc-unused-parameters,-warnings-as-errors]
+                   void visit(const string &from, const string &to,
+                        ^~~~~
+                         /*visit*/
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:220:65: error: parameter name 'to' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+                   void visit(const string &from, const string &to,
+                                                                ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:222:37: error: variable name 'q' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+  priority_queue<pair<int, string>> q;
+                                    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:224:10: error: 'make_pair<int, const std::basic_string<char> &>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  q.push(make_pair(0, startLabel));
+         ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_pair.h:741:5: note: resolves to this declaration
+    make_pair(_T1&& __x, _T2&& __y)
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:225:7: error: invalid case style for variable 'mst_cost' [readability-identifier-naming,-warnings-as-errors]
+  int mst_cost = 0;
+      ^~~~~~~~
+      mstCost
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:228:9: error: 'operator=' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    tmp = q.top();
+        ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_pair.h:568:7: note: resolves to this declaration
+      operator=(__conditional_t<__and_<is_copy_assignable<_T1>,
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:234:15: error: 'operator[]' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+      visitedP[vert] = true;
+              ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_map.h:502:7: note: resolves to this declaration
+      operator[](const key_type& __k)
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:235:7: error: kernel performance could be improved by unrolling this loop with a '#pragma unroll' directive [altera-unroll-loops,-warnings-as-errors]
+      for (auto &s : vertices.at(vert)->connectedVerts) {
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:235:18: error: variable name 's' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+      for (auto &s : vertices.at(vert)->connectedVerts) {
+                 ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:235:20: error: 'operator!=<std::pair<Vertex *, int> *, std::vector<std::pair<Vertex *, int>>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+      for (auto &s : vertices.at(vert)->connectedVerts) {
+                   ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_iterator.h:1237:5: note: resolves to this declaration
+    operator!=(const __normal_iterator<_Iterator, _Container>& __lhs,
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:235:20: error: 'operator*' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+      for (auto &s : vertices.at(vert)->connectedVerts) {
+                   ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_iterator.h:1095:7: note: resolves to this declaration
+      operator*() const _GLIBCXX_NOEXCEPT
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:235:20: error: 'operator++' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+      for (auto &s : vertices.at(vert)->connectedVerts) {
+                   ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_iterator.h:1105:7: note: resolves to this declaration
+      operator++() _GLIBCXX_NOEXCEPT
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:236:16: error: invalid case style for variable 'adj_str' [readability-identifier-naming,-warnings-as-errors]
+        string adj_str = s.first->label;
+               ^~~~~~~
+               adjStr
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:237:13: error: invalid case style for variable 'adj_int' [readability-identifier-naming,-warnings-as-errors]
+        int adj_int = s.second;
+            ^~~~~~~
+            adjInt
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:239:18: error: 'make_pair<int &, std::basic_string<char> &>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+          q.push(make_pair(adj_int, adj_str));
+                 ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/stl_pair.h:741:5: note: resolves to this declaration
+    make_pair(_T1&& __x, _T2&& __y)
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:248:12: error: declaration must be declared within the '__llvm_libc' namespace [llvmlibc-implementation-in-namespace,-warnings-as-errors]
+int Graph::mstKruskal(const string &startLabel,
+           ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:248:12: error: method 'mstKruskal' can be made static [readability-convert-member-functions-to-static,-warnings-as-errors]
+int Graph::mstKruskal(const string &startLabel,
+           ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:248:37: error: parameter 'startLabel' is unused [misc-unused-parameters,-warnings-as-errors]
+int Graph::mstKruskal(const string &startLabel,
+                                    ^~~~~~~~~~
+                                     /*startLabel*/
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:249:28: error: parameter 'visit' is unused [misc-unused-parameters,-warnings-as-errors]
+                      void visit(const string &from, const string &to,
+                           ^~~~~
+                            /*visit*/
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:249:68: error: parameter name 'to' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+                      void visit(const string &from, const string &to,
+                                                                   ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:255:13: error: declaration must be declared within the '__llvm_libc' namespace [llvmlibc-implementation-in-namespace,-warnings-as-errors]
+bool Graph::readFile(const string &filename) {
+            ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:258:10: error: 'operator<<<std::char_traits<char>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    cerr << "Failed to open " << filename << endl;
+         ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/ostream:615:5: note: resolves to this declaration
+    operator<<(basic_ostream<char, _Traits>& __out, const char* __s)
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:258:31: error: 'operator<<<char, std::char_traits<char>, std::allocator<char>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    cerr << "Failed to open " << filename << endl;
+                              ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/basic_string.h:3882:5: note: resolves to this declaration
+    operator<<(basic_ostream<_CharT, _Traits>& __os,
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:258:43: error: 'operator<<' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    cerr << "Failed to open " << filename << endl;
+                                          ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/ostream:108:7: note: resolves to this declaration
+      operator<<(__ostream_type& (*__pf)(__ostream_type&))
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:258:46: error: 'endl<char, std::char_traits<char>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    cerr << "Failed to open " << filename << endl;
+                                             ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/ostream:688:5: note: resolves to this declaration
+    endl(basic_ostream<_CharT, _Traits>& __os)
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:265:10: error: 'operator>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  myfile >> edges;
+         ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/istream:179:7: note: resolves to this declaration
+      operator>>(int& __n);
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:266:3: error: kernel performance could be improved by unrolling this loop with a '#pragma unroll' directive [altera-unroll-loops,-warnings-as-errors]
+  for (int i = 0; i < edges; ++i) {
+  ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:267:12: error: 'operator>><char, std::char_traits<char>, std::allocator<char>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    myfile >> fromVertex >> toVertex >> weight;
+           ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/basic_string.h:3869:5: note: resolves to this declaration
+    operator>>(basic_istream<char>& __is, basic_string<char>& __str);
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:267:26: error: 'operator>><char, std::char_traits<char>, std::allocator<char>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    myfile >> fromVertex >> toVertex >> weight;
+                         ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/basic_string.h:3869:5: note: resolves to this declaration
+    operator>>(basic_istream<char>& __is, basic_string<char>& __str);
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:267:38: error: 'operator>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    myfile >> fromVertex >> toVertex >> weight;
+                                     ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/istream:179:7: note: resolves to this declaration
+      operator>>(int& __n);
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.h:11:1: error: system include map not allowed, transitively included from /home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.h [llvmlibc-restrict-system-libc-headers,-warnings-as-errors]
+#include <map>
+^~~~~~~~~~~~~~
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.h:12:1: error: system include queue not allowed, transitively included from /home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.h [llvmlibc-restrict-system-libc-headers,-warnings-as-errors]
+#include <queue>
+^~~~~~~~~~~~~~~~
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.h:13:1: error: system include set not allowed, transitively included from /home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.h [llvmlibc-restrict-system-libc-headers,-warnings-as-errors]
+#include <set>
+^~~~~~~~~~~~~~
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.h:14:1: error: system include string not allowed, transitively included from /home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.h [llvmlibc-restrict-system-libc-headers,-warnings-as-errors]
+#include <string>
+^~~~~~~~~~~~~~~~~
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.h:15:1: error: system include unordered_map not allowed, transitively included from /home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.h [llvmlibc-restrict-system-libc-headers,-warnings-as-errors]
+#include <unordered_map>
+^~~~~~~~~~~~~~~~~~~~~~~~
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.h:16:1: error: system include vector not allowed, transitively included from /home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.h [llvmlibc-restrict-system-libc-headers,-warnings-as-errors]
+#include <vector>
+^~~~~~~~~~~~~~~~~
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.h:20:8: error: accessing fields in struct 'Vertex' is inefficient due to poor alignment; currently aligned to 8 bytes, but recommended alignment is 64 bytes [altera-struct-pack-align,-warnings-as-errors]
+struct Vertex {
+       ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.h:20:8: note: use "__attribute__((aligned(64)))" to align struct 'Vertex' to 64 bytes
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.h:28:8: error: accessing fields in struct 'Edge' is inefficient due to padding; only needs 68 bytes but is using 72 bytes [altera-struct-pack-align,-warnings-as-errors]
+struct Edge {
+       ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.h:28:8: note: use "__attribute__((packed))" to reduce the amount of padding applied to struct 'Edge'
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.h:28:8: error: accessing fields in struct 'Edge' is inefficient due to poor alignment; currently aligned to 8 bytes, but recommended alignment is 128 bytes [altera-struct-pack-align,-warnings-as-errors]
+struct Edge {
+       ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.h:28:8: note: use "__attribute__((aligned(128)))" to align struct 'Edge' to 128 bytes
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.h:28:8: error: constructor does not initialize these fields: weight [cppcoreguidelines-pro-type-member-init,hicpp-member-init,-warnings-as-errors]
+struct Edge {
+       ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.h:37:21: error: member variable 'visited' has public visibility [cppcoreguidelines-non-private-member-variables-in-classes,misc-non-private-member-variables-in-classes,-warnings-as-errors]
+  map<string, bool> visited;
+                    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.h:64:8: error: function 'Graph::containsEdge' has a definition with different parameter names [readability-inconsistent-declaration-parameter-name,-warnings-as-errors]
+  bool containsEdge(const string &from, const string &label, int weight) const;
+       ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp:69:13: note: the definition seen here
+bool Graph::containsEdge(const string &from, const string &to,
+            ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.h:64:8: note: differing parameters are named here: ('label'), in definition: ('to')
+  bool containsEdge(const string &from, const string &label, int weight) const;
+       ^                                              ~~~~~
+                                                      to
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.h:74:50: error: parameter name 'to' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+  bool connect(const string &from, const string &to, int weight = 0);
+                                                 ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.h:78:53: error: parameter name 'to' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+  bool disconnect(const string &from, const string &to);
+                                                    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.h:117:60: error: parameter name 'to' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+              void visit(const string &from, const string &to,
+                                                           ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.h:125:63: error: parameter name 'to' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+                 void visit(const string &from, const string &to,
+                                                              ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:9:1: error: system include cassert not allowed [llvmlibc-restrict-system-libc-headers,-warnings-as-errors]
+#include <cassert>
+^~~~~~~~~~~~~~~~~~
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:10:1: error: system include iostream not allowed [llvmlibc-restrict-system-libc-headers,-warnings-as-errors]
+#include <iostream>
+^~~~~~~~~~~~~~~~~~~
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:11:1: error: system include sstream not allowed [llvmlibc-restrict-system-libc-headers,-warnings-as-errors]
+#include <sstream>
+^~~~~~~~~~~~~~~~~~
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:12:1: error: system include string not allowed [llvmlibc-restrict-system-libc-headers,-warnings-as-errors]
+#include <string>
+^~~~~~~~~~~~~~~~~
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:14:17: error: declaration must be declared within the '__llvm_libc' namespace [llvmlibc-implementation-in-namespace,-warnings-as-errors]
+using namespace std;
+                ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:21:6: error: declaration must be declared within the '__llvm_libc' namespace [llvmlibc-implementation-in-namespace,-warnings-as-errors]
+void vertexPrinter(const string &s) { globalSS << s; }
+     ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:21:34: error: parameter name 's' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+void vertexPrinter(const string &s) { globalSS << s; }
+                                 ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:21:48: error: 'operator<<<char, std::char_traits<char>, std::allocator<char>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+void vertexPrinter(const string &s) { globalSS << s; }
+                                               ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/basic_string.h:3882:5: note: resolves to this declaration
+    operator<<(basic_ostream<_CharT, _Traits>& __os,
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:24:6: error: declaration must be declared within the '__llvm_libc' namespace [llvmlibc-implementation-in-namespace,-warnings-as-errors]
+void edgePrinter(const string &from, const string &to, int weight) {
+     ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:24:52: error: parameter name 'to' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+void edgePrinter(const string &from, const string &to, int weight) {
+                                                   ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:25:12: error: 'operator<<<std::char_traits<char>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  globalSS << "[" << from << to << " " << weight << "]";
+           ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/ostream:615:5: note: resolves to this declaration
+    operator<<(basic_ostream<char, _Traits>& __out, const char* __s)
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:25:19: error: 'operator<<<char, std::char_traits<char>, std::allocator<char>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  globalSS << "[" << from << to << " " << weight << "]";
+                  ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/basic_string.h:3882:5: note: resolves to this declaration
+    operator<<(basic_ostream<_CharT, _Traits>& __os,
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:25:27: error: 'operator<<<char, std::char_traits<char>, std::allocator<char>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  globalSS << "[" << from << to << " " << weight << "]";
+                          ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/basic_string.h:3882:5: note: resolves to this declaration
+    operator<<(basic_ostream<_CharT, _Traits>& __os,
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:25:33: error: 'operator<<<std::char_traits<char>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  globalSS << "[" << from << to << " " << weight << "]";
+                                ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/ostream:615:5: note: resolves to this declaration
+    operator<<(basic_ostream<char, _Traits>& __out, const char* __s)
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:25:40: error: 'operator<<' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  globalSS << "[" << from << to << " " << weight << "]";
+                                       ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/ostream:189:7: note: resolves to this declaration
+      operator<<(int __n);
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:25:50: error: 'operator<<<std::char_traits<char>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  globalSS << "[" << from << to << " " << weight << "]";
+                                                 ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/ostream:615:5: note: resolves to this declaration
+    operator<<(basic_ostream<char, _Traits>& __out, const char* __s)
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:30:15: error: declaration must be declared within the '__llvm_libc' namespace [llvmlibc-implementation-in-namespace,-warnings-as-errors]
+static string map2string(const map<K, L> &mp) {
+              ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:30:43: error: parameter name 'mp' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+static string map2string(const map<K, L> &mp) {
+                                          ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:32:3: error: kernel performance could be improved by unrolling this loop with a '#pragma unroll' directive [altera-unroll-loops,-warnings-as-errors]
+  for (auto &p : mp) {
+  ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:32:14: error: variable name 'p' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+  for (auto &p : mp) {
+             ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:33:9: error: 'operator<<<std::char_traits<char>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+    out << "[" << p.first << ":" << p.second << "]";
+        ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/ostream:615:5: note: resolves to this declaration
+    operator<<(basic_ostream<char, _Traits>& __out, const char* __s)
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:38:6: error: declaration must be declared within the '__llvm_libc' namespace [llvmlibc-implementation-in-namespace,-warnings-as-errors]
+void testGraphBasic() {
+     ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:38:6: error: function 'testGraphBasic' has cognitive complexity of 44 (threshold 25) [readability-function-cognitive-complexity,-warnings-as-errors]
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:40:3: note: +1, including nesting penalty of 0, nesting level increased to 1
+  assert(g.add("a"));
+  ^
+/usr/include/assert.h:91:7: note: expanded from macro 'assert'
+      ? void (0)                                                        \
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:41:3: note: +1, including nesting penalty of 0, nesting level increased to 1
+  assert(g.add("b") && "add vertex b");
+  ^
+/usr/include/assert.h:91:7: note: expanded from macro 'assert'
+      ? void (0)                                                        \
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:41:21: note: +1
+  assert(g.add("b") && "add vertex b");
+                    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:42:3: note: +1, including nesting penalty of 0, nesting level increased to 1
+  assert(g.add("c") && "add vertex c");
+  ^
+/usr/include/assert.h:91:7: note: expanded from macro 'assert'
+      ? void (0)                                                        \
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:42:21: note: +1
+  assert(g.add("c") && "add vertex c");
+                    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:43:3: note: +1, including nesting penalty of 0, nesting level increased to 1
+  assert(g.add("d") && "add vertex d");
+  ^
+/usr/include/assert.h:91:7: note: expanded from macro 'assert'
+      ? void (0)                                                        \
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:43:21: note: +1
+  assert(g.add("d") && "add vertex d");
+                    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:44:3: note: +1, including nesting penalty of 0, nesting level increased to 1
+  assert(g.add("e") && "add vertex e");
+  ^
+/usr/include/assert.h:91:7: note: expanded from macro 'assert'
+      ? void (0)                                                        \
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:44:21: note: +1
+  assert(g.add("e") && "add vertex e");
+                    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:45:3: note: +1, including nesting penalty of 0, nesting level increased to 1
+  assert(!g.add("b") && "b added twice");
+  ^
+/usr/include/assert.h:91:7: note: expanded from macro 'assert'
+      ? void (0)                                                        \
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:45:22: note: +1
+  assert(!g.add("b") && "b added twice");
+                     ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:46:3: note: +1, including nesting penalty of 0, nesting level increased to 1
+  assert(g.connect("a", "b", 10) && "connect a b");
+  ^
+/usr/include/assert.h:91:7: note: expanded from macro 'assert'
+      ? void (0)                                                        \
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:46:34: note: +1
+  assert(g.connect("a", "b", 10) && "connect a b");
+                                 ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:47:3: note: +1, including nesting penalty of 0, nesting level increased to 1
+  assert(!g.connect("a", "b", 50) && "duplicate connect a b");
+  ^
+/usr/include/assert.h:91:7: note: expanded from macro 'assert'
+      ? void (0)                                                        \
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:47:35: note: +1
+  assert(!g.connect("a", "b", 50) && "duplicate connect a b");
+                                  ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:48:3: note: +1, including nesting penalty of 0, nesting level increased to 1
+  assert(!g.connect("a", "a", 1) && "connect a to itself");
+  ^
+/usr/include/assert.h:91:7: note: expanded from macro 'assert'
+      ? void (0)                                                        \
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:48:34: note: +1
+  assert(!g.connect("a", "a", 1) && "connect a to itself");
+                                 ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:51:3: note: +1, including nesting penalty of 0, nesting level increased to 1
+  assert((g.verticesSize() == 5) && "graph number of vertices");
+  ^
+/usr/include/assert.h:91:7: note: expanded from macro 'assert'
+      ? void (0)                                                        \
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:51:34: note: +1
+  assert((g.verticesSize() == 5) && "graph number of vertices");
+                                 ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:52:3: note: +1, including nesting penalty of 0, nesting level increased to 1
+  assert((g.edgesSize() == 3) && "graph number of edges");
+  ^
+/usr/include/assert.h:91:7: note: expanded from macro 'assert'
+      ? void (0)                                                        \
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:52:31: note: +1
+  assert((g.edgesSize() == 3) && "graph number of edges");
+                              ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:53:3: note: +1, including nesting penalty of 0, nesting level increased to 1
+  assert((g.vertexDegree("a") == 3) && "vertex number of edges");
+  ^
+/usr/include/assert.h:91:7: note: expanded from macro 'assert'
+      ? void (0)                                                        \
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:53:37: note: +1
+  assert((g.vertexDegree("a") == 3) && "vertex number of edges");
+                                    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:54:3: note: +1, including nesting penalty of 0, nesting level increased to 1
+  assert((g.vertexDegree("c") == 0) && "no outgoing edges c");
+  ^
+/usr/include/assert.h:91:7: note: expanded from macro 'assert'
+      ? void (0)                                                        \
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:54:37: note: +1
+  assert((g.vertexDegree("c") == 0) && "no outgoing edges c");
+                                    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:55:3: note: +1, including nesting penalty of 0, nesting level increased to 1
+  assert((g.vertexDegree("xxx") == -1) && "no edges for xxx");
+  ^
+/usr/include/assert.h:91:7: note: expanded from macro 'assert'
+      ? void (0)                                                        \
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:55:40: note: +1
+  assert((g.vertexDegree("xxx") == -1) && "no edges for xxx");
+                                       ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:56:3: note: +1, including nesting penalty of 0, nesting level increased to 1
+  assert(!g.contains("xxx") && "xxx not in graph");
+  ^
+/usr/include/assert.h:91:7: note: expanded from macro 'assert'
+      ? void (0)                                                        \
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:56:29: note: +1
+  assert(!g.contains("xxx") && "xxx not in graph");
+                            ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:57:3: note: +1, including nesting penalty of 0, nesting level increased to 1
+  assert(g.contains("a") && "a in graph");
+  ^
+/usr/include/assert.h:91:7: note: expanded from macro 'assert'
+      ? void (0)                                                        \
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:57:26: note: +1
+  assert(g.contains("a") && "a in graph");
+                         ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:60:3: note: +1, including nesting penalty of 0, nesting level increased to 1
+  assert(g.getEdgesAsString("a") == "b(10),c(20),d(40)");
+  ^
+/usr/include/assert.h:91:7: note: expanded from macro 'assert'
+      ? void (0)                                                        \
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:62:3: note: +1, including nesting penalty of 0, nesting level increased to 1
+  assert(!g.disconnect("a", "e") && "disconnecting non-existent vertex");
+  ^
+/usr/include/assert.h:91:7: note: expanded from macro 'assert'
+      ? void (0)                                                        \
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:62:34: note: +1
+  assert(!g.disconnect("a", "e") && "disconnecting non-existent vertex");
+                                 ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:63:3: note: +1, including nesting penalty of 0, nesting level increased to 1
+  assert((g.edgesSize() == 3) && "disconnected nonexisting");
+  ^
+/usr/include/assert.h:91:7: note: expanded from macro 'assert'
+      ? void (0)                                                        \
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:63:31: note: +1
+  assert((g.edgesSize() == 3) && "disconnected nonexisting");
+                              ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:64:3: note: +1, including nesting penalty of 0, nesting level increased to 1
+  assert(g.disconnect("a", "c") && "a-c disconnect");
+  ^
+/usr/include/assert.h:91:7: note: expanded from macro 'assert'
+      ? void (0)                                                        \
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:64:33: note: +1
+  assert(g.disconnect("a", "c") && "a-c disconnect");
+                                ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:65:3: note: +1, including nesting penalty of 0, nesting level increased to 1
+  assert((g.edgesSize() == 2) && "number of edges after disconnect");
+  ^
+/usr/include/assert.h:91:7: note: expanded from macro 'assert'
+      ? void (0)                                                        \
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:65:31: note: +1
+  assert((g.edgesSize() == 2) && "number of edges after disconnect");
+                              ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:66:3: note: +1, including nesting penalty of 0, nesting level increased to 1
+  assert((g.vertexDegree("a") == 2) && "a has 2 edges");
+  ^
+/usr/include/assert.h:91:7: note: expanded from macro 'assert'
+      ? void (0)                                                        \
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:66:37: note: +1
+  assert((g.vertexDegree("a") == 2) && "a has 2 edges");
+                                    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:67:3: note: +1, including nesting penalty of 0, nesting level increased to 1
+  assert(g.getEdgesAsString("a") == "b(10),d(40)" && "removing middle edge");
+  ^
+/usr/include/assert.h:91:7: note: expanded from macro 'assert'
+      ? void (0)                                                        \
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:67:51: note: +1
+  assert(g.getEdgesAsString("a") == "b(10),d(40)" && "removing middle edge");
+                                                  ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:39:9: error: variable name 'g' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+  Graph g;
+        ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:60:34: error: 'operator==<char, std::char_traits<char>, std::allocator<char>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  assert(g.getEdgesAsString("a") == "b(10),c(20),d(40)");
+                                 ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/basic_string.h:3598:5: note: resolves to this declaration
+    operator==(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:67:34: error: 'operator==<char, std::char_traits<char>, std::allocator<char>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  assert(g.getEdgesAsString("a") == "b(10),d(40)" && "removing middle edge");
+                                 ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/basic_string.h:3598:5: note: resolves to this declaration
+    operator==(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:70:6: error: declaration must be declared within the '__llvm_libc' namespace [llvmlibc-implementation-in-namespace,-warnings-as-errors]
+void testGraph0DFS() {
+     ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:71:8: error: 'operator<<<std::char_traits<char>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  cout << "testGraph0DFS" << endl;
+       ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/ostream:615:5: note: resolves to this declaration
+    operator<<(basic_ostream<char, _Traits>& __out, const char* __s)
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:71:27: error: 'operator<<' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  cout << "testGraph0DFS" << endl;
+                          ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/ostream:108:7: note: resolves to this declaration
+      operator<<(__ostream_type& (*__pf)(__ostream_type&))
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:71:30: error: 'endl<char, std::char_traits<char>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  cout << "testGraph0DFS" << endl;
+                             ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/ostream:688:5: note: resolves to this declaration
+    endl(basic_ostream<_CharT, _Traits>& __os)
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:72:9: error: variable name 'g' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+  Graph g;
+        ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:79:34: error: 'operator==<char, std::char_traits<char>, std::allocator<char>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  assert(g.getEdgesAsString("A") == "B(1),C(8)");
+                                 ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/basic_string.h:3598:5: note: resolves to this declaration
+    operator==(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:80:34: error: 'operator==<char, std::char_traits<char>, std::allocator<char>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  assert(g.getEdgesAsString("B") == "C(3)");
+                                 ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/bits/basic_string.h:3598:5: note: resolves to this declaration
+    operator==(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:100:6: error: declaration must be declared within the '__llvm_libc' namespace [llvmlibc-implementation-in-namespace,-warnings-as-errors]
+void testGraph0BFS() {
+     ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:101:8: error: 'operator<<<std::char_traits<char>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  cout << "testGraph0BFS" << endl;
+       ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/ostream:615:5: note: resolves to this declaration
+    operator<<(basic_ostream<char, _Traits>& __out, const char* __s)
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:101:27: error: 'operator<<' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  cout << "testGraph0BFS" << endl;
+                          ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/ostream:108:7: note: resolves to this declaration
+      operator<<(__ostream_type& (*__pf)(__ostream_type&))
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:101:30: error: 'endl<char, std::char_traits<char>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  cout << "testGraph0BFS" << endl;
+                             ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/ostream:688:5: note: resolves to this declaration
+    endl(basic_ostream<_CharT, _Traits>& __os)
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:102:9: error: variable name 'g' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+  Graph g;
+        ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:124:6: error: declaration must be declared within the '__llvm_libc' namespace [llvmlibc-implementation-in-namespace,-warnings-as-errors]
+void testGraph0Dijkstra() {
+     ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:125:8: error: 'operator<<<std::char_traits<char>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  cout << "testGraph0Dijkstra" << endl;
+       ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/ostream:615:5: note: resolves to this declaration
+    operator<<(basic_ostream<char, _Traits>& __out, const char* __s)
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:125:32: error: 'operator<<' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  cout << "testGraph0Dijkstra" << endl;
+                               ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/ostream:108:7: note: resolves to this declaration
+      operator<<(__ostream_type& (*__pf)(__ostream_type&))
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:125:35: error: 'endl<char, std::char_traits<char>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  cout << "testGraph0Dijkstra" << endl;
+                                  ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/ostream:688:5: note: resolves to this declaration
+    endl(basic_ostream<_CharT, _Traits>& __os)
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:126:9: error: variable name 'g' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+  Graph g;
+        ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:147:6: error: declaration must be declared within the '__llvm_libc' namespace [llvmlibc-implementation-in-namespace,-warnings-as-errors]
+void testGraph0NotDirected() {
+     ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:148:8: error: 'operator<<<std::char_traits<char>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  cout << "testGraph0NotDirected" << endl;
+       ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/ostream:615:5: note: resolves to this declaration
+    operator<<(basic_ostream<char, _Traits>& __out, const char* __s)
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:148:35: error: 'operator<<' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  cout << "testGraph0NotDirected" << endl;
+                                  ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/ostream:108:7: note: resolves to this declaration
+      operator<<(__ostream_type& (*__pf)(__ostream_type&))
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:148:38: error: 'endl<char, std::char_traits<char>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  cout << "testGraph0NotDirected" << endl;
+                                     ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/ostream:688:5: note: resolves to this declaration
+    endl(basic_ostream<_CharT, _Traits>& __os)
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:150:9: error: variable name 'g' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+  Graph g(isDirectional);
+        ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:208:6: error: declaration must be declared within the '__llvm_libc' namespace [llvmlibc-implementation-in-namespace,-warnings-as-errors]
+void testGraph1() {
+     ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:209:8: error: 'operator<<<std::char_traits<char>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  cout << "testGraph1" << endl;
+       ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/ostream:615:5: note: resolves to this declaration
+    operator<<(basic_ostream<char, _Traits>& __out, const char* __s)
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:209:24: error: 'operator<<' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  cout << "testGraph1" << endl;
+                       ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/ostream:108:7: note: resolves to this declaration
+      operator<<(__ostream_type& (*__pf)(__ostream_type&))
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:209:27: error: 'endl<char, std::char_traits<char>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  cout << "testGraph1" << endl;
+                          ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/ostream:688:5: note: resolves to this declaration
+    endl(basic_ostream<_CharT, _Traits>& __os)
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:210:9: error: variable name 'g' is too short, expected at least 3 characters [readability-identifier-length,-warnings-as-errors]
+  Graph g;
+        ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:241:6: error: declaration must be declared within the '__llvm_libc' namespace [llvmlibc-implementation-in-namespace,-warnings-as-errors]
+void testAll() {
+     ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:242:3: error: 'testGraphBasic' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  testGraphBasic();
+  ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:38:6: note: resolves to this declaration
+void testGraphBasic() {
+     ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:243:3: error: 'testGraph0DFS' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  testGraph0DFS();
+  ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:70:6: note: resolves to this declaration
+void testGraph0DFS() {
+     ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:244:3: error: 'testGraph0BFS' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  testGraph0BFS();
+  ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:100:6: note: resolves to this declaration
+void testGraph0BFS() {
+     ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:245:3: error: 'testGraph0Dijkstra' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  testGraph0Dijkstra();
+  ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:124:6: note: resolves to this declaration
+void testGraph0Dijkstra() {
+     ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:246:3: error: 'testGraph0NotDirected' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  testGraph0NotDirected();
+  ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:147:6: note: resolves to this declaration
+void testGraph0NotDirected() {
+     ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:247:3: error: 'testGraph1' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  testGraph1();
+  ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp:208:6: note: resolves to this declaration
+void testGraph1() {
+     ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/main.cpp:5:1: error: system include iostream not allowed [llvmlibc-restrict-system-libc-headers,-warnings-as-errors]
+#include <iostream>
+^~~~~~~~~~~~~~~~~~~
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/main.cpp:7:17: error: declaration must be declared within the '__llvm_libc' namespace [llvmlibc-implementation-in-namespace,-warnings-as-errors]
+using namespace std;
+                ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/main.cpp:10:6: error: declaration must be declared within the '__llvm_libc' namespace [llvmlibc-implementation-in-namespace,-warnings-as-errors]
+void testAll();
+     ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/main.cpp:12:5: error: declaration must be declared within the '__llvm_libc' namespace [llvmlibc-implementation-in-namespace,-warnings-as-errors]
+int main() {
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/main.cpp:13:3: error: 'testAll' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  testAll();
+  ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/main.cpp:10:6: note: resolves to this declaration
+void testAll();
+     ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/main.cpp:14:8: error: 'operator<<<std::char_traits<char>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  cout << "Done!" << endl;
+       ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/ostream:615:5: note: resolves to this declaration
+    operator<<(basic_ostream<char, _Traits>& __out, const char* __s)
+    ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/main.cpp:14:19: error: 'operator<<' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  cout << "Done!" << endl;
+                  ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/ostream:108:7: note: resolves to this declaration
+      operator<<(__ostream_type& (*__pf)(__ostream_type&))
+      ^
+/home/NETID/hpeter4/css343/343-graph-Dro-Dro/main.cpp:14:22: error: 'endl<char, std::char_traits<char>>' must resolve to a function declared within the '__llvm_libc' namespace [llvmlibc-callee-namespace,-warnings-as-errors]
+  cout << "Done!" << endl;
+                     ^
+/opt/rh/gcc-toolset-12/root/usr/lib/gcc/x86_64-redhat-linux/12/../../../../include/c++/12/ostream:688:5: note: resolves to this declaration
+    endl(basic_ostream<_CharT, _Traits>& __os)
+    ^
+Suppressed 166471 warnings (166468 in non-user code, 3 NOLINT).
+Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.
+266 warnings treated as errors
+=====================================================
+4. clang-format does not find any formatting issues
+=====================================================
+Running clang-format on ./graph.cpp
+Running clang-format on ./graphtest.cpp
+Running clang-format on ./main.cpp
+=====================================================
+5. No memory leaks using g++
+=====================================================
+=====================================================
+6. No memory leaks using valgrind, look for "definitely lost" 
+=====================================================
+==2001034== Memcheck, a memory error detector
+==2001034== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==2001034== Using Valgrind-3.19.0 and LibVEX; rerun with -h for copyright info
+==2001034== Command: ./a.out
+==2001034== Parent PID: 2000926
+==2001034== 
+==2001034== 
+==2001034== HEAP SUMMARY:
+==2001034==     in use at exit: 0 bytes in 0 blocks
+==2001034==   total heap usage: 151 allocs, 151 frees, 127,617 bytes allocated
+==2001034== 
+==2001034== All heap blocks were freed -- no leaks are possible
+==2001034== 
+==2001034== For lists of detected and suppressed errors, rerun with: -s
+==2001034== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+=====================================================
+7. Tests have full code coverage
+=====================================================
+File '/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graph.cpp':
+Name                                                                                                                                                                                                                                                                                                             Regions    Miss   Cover     Lines    Miss   Cover  Branches    Miss   Cover
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Graph::Graph(bool)                                                                                                                                                                                                                                                                                                     1       0 100.00%         1       0 100.00%         0       0   0.00%
+Graph::~Graph()                                                                                                                                                                                                                                                                                                        3       0 100.00%         8       0 100.00%         4       0 100.00%
+Graph::verticesSize() const                                                                                                                                                                                                                                                                                            1       0 100.00%         1       0 100.00%         0       0   0.00%
+Graph::edgesSize() const                                                                                                                                                                                                                                                                                               1       0 100.00%         1       0 100.00%         0       0   0.00%
+Graph::vertexDegree(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const                                                                                                                                                                                                      4       0 100.00%         7       0 100.00%         2       0 100.00%
+Graph::add(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)                                                                                                                                                                                                                     4       0 100.00%        10       0 100.00%         2       0 100.00%
+Graph::contains(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const                                                                                                                                                                                                          4       0 100.00%         7       0 100.00%         2       0 100.00%
+Graph::containsEdge(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int) const                                                                                                         7       0 100.00%        12       0 100.00%         6       0 100.00%
+Graph::getEdgesAsString(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const                                                                                                                                                                                                  6       1  83.33%        20       1  95.00%         6       1  83.33%
+Graph::connect(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int)                                                                                                                   12       0 100.00%        25       0 100.00%        10       0 100.00%
+Graph::disconnect(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)                                                                                                                     16       1  93.75%        24       2  91.67%        16       3  81.25%
+Graph::dfs(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, void (*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&))                                                                                                                   4       4   0.00%         8       8   0.00%         4       4   0.00%
+Graph::bfs(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, void (*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&))                                                                                                                   6       6   0.00%        15      15   0.00%         6       6   0.00%
+Graph::dijkstra(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const                                                                                                                                                                                                          8       8   0.00%        28      28   0.00%         8       8   0.00%
+Graph::mstPrim(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, void (*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int)) const            8       8   0.00%        25      25   0.00%         8       8   0.00%
+Graph::mstKruskal(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, void (*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int)) const         1       1   0.00%         3       3   0.00%         0       0   0.00%
+Graph::readFile(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)                                                                                                                                                                                                                7       1  85.71%        18       3  83.33%         4       1  75.00%
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+TOTAL                                                                                                                                                                                                                                                                                                                 93      30  67.74%       213      85  60.09%        78      31  60.26%
+
+File '/home/NETID/hpeter4/css343/343-graph-Dro-Dro/graphtest.cpp':
+Name                                                                                                                                                                                                                                                                                                             Regions    Miss   Cover     Lines    Miss   Cover  Branches    Miss   Cover
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+vertexPrinter(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)                                                                                                                                                                                                                  1       1   0.00%         1       1   0.00%         0       0   0.00%
+edgePrinter(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int)                                                                                                                       1       1   0.00%         3       3   0.00%         0       0   0.00%
+testGraphBasic()                                                                                                                                                                                                                                                                                                       1       0 100.00%        28      22  21.43%         0       0   0.00%
+testGraph0DFS()                                                                                                                                                                                                                                                                                                        4       1  75.00%        13       7  46.15%         2       1  50.00%
+testGraph0BFS()                                                                                                                                                                                                                                                                                                        3       1  66.67%         7       2  71.43%         2       1  50.00%
+testGraph0Dijkstra()                                                                                                                                                                                                                                                                                                   3       1  66.67%         7       2  71.43%         2       1  50.00%
+testGraph0NotDirected()                                                                                                                                                                                                                                                                                                3       1  66.67%         8       2  75.00%         2       1  50.00%
+testGraph1()                                                                                                                                                                                                                                                                                                           3       1  66.67%         7       2  71.43%         2       1  50.00%
+testAll()                                                                                                                                                                                                                                                                                                              1       0 100.00%         8       0 100.00%         0       0   0.00%
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+TOTAL                                                                                                                                                                                                                                                                                                                 20       7  65.00%        82      41  50.00%        10       5  50.00%
+
+File '/home/NETID/hpeter4/css343/343-graph-Dro-Dro/main.cpp':
+Name                                                                                                                                                                                                                                                                                                             Regions    Miss   Cover     Lines    Miss   Cover  Branches    Miss   Cover
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+main                                                                                                                                                                                                                                                                                                                   1       0 100.00%         5       0 100.00%         0       0   0.00%
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+TOTAL                                                                                                                                                                                                                                                                                                                  1       0 100.00%         5       0 100.00%         0       0   0.00%
+=====================================================
+The lines below were never executed
+=====================================================
+   87|      0|    return "";
+  152|      0|      disconnect(to, from);
+  153|      0|    }
+  159|      0|void Graph::dfs(const string &startLabel, void visit(const string &label)) {
+  160|      0|  visited[startLabel] = true;
+  161|      0|  for (auto &s : vertices.at(startLabel)->connectedVerts) {
+  162|      0|    if (visited.count(s.first->label) == 0) {
+  163|      0|      dfs(s.first->label, visit);
+  164|      0|    }
+  165|      0|  }
+  166|      0|}
+  169|      0|void Graph::bfs(const string &startLabel, void visit(const string &label)) {
+  170|      0|  queue<string> q;
+  171|      0|  q.push(startLabel);
+  172|      0|  visited[startLabel] = true;
+  173|      0|  while (!q.empty()) {
+  174|      0|    string u = q.front();
+  175|      0|    q.pop();
+  176|      0|    for (auto &s : vertices.at(startLabel)->connectedVerts) {
+  177|      0|      if (visited.count(s.first->label) == 0) {
+  178|      0|        visited[s.first->label] = true;
+  179|      0|        q.push(s.first->label);
+  180|      0|      }
+  181|      0|    }
+  182|      0|  }
+  183|      0|}
+  188|      0|Graph::dijkstra(const string &startLabel) const {
+  189|      0|  map<string, int> weights;
+  190|      0|  map<string, string> previous;
+  192|      0|  set<pair<string, int>> extract;
+  193|      0|  extract.insert(make_pair(startLabel, 0));
+  194|      0|  map<string, int> weightsInPath;
+  195|      0|  weightsInPath[startLabel] = 0;
+  196|      0|  int currentPath = INT32_MAX;
+  197|      0|  while (!extract.empty()) {
+  198|      0|    pair<string, int> tmp = *(extract.begin());
+  199|      0|    extract.erase(extract.begin());
+  200|      0|    string u = tmp.first;
+  201|      0|    for (auto &s : vertices.at(u)->connectedVerts) {
+  202|      0|      string v = s.first->label;
+  203|      0|      int weight = s.second;
+  204|      0|      if (currentPath > weightsInPath[u] + weight) {
+  205|      0|        if (currentPath != INT32_MAX) {
+  206|      0|          extract.erase(extract.find(make_pair(v, weight)));
+  207|      0|        }
+  208|      0|        currentPath = weightsInPath[u] + weight;
+  209|      0|        extract.insert(make_pair(v, weight));
+  210|      0|        weights[v] = weight;
+  211|      0|        previous[v] = u;
+  212|      0|      }
+  213|      0|    }
+  214|      0|  }
+  215|      0|  return make_pair(weights, previous);
+  216|      0|}
+  221|      0|                              int weight)) const {
+  222|      0|  priority_queue<pair<int, string>> q;
+  223|      0|  map<string, bool> visitedP;
+  224|      0|  q.push(make_pair(0, startLabel));
+  225|      0|  int mst_cost = 0;
+  226|      0|  while (!q.empty()) {
+  227|      0|    pair<int, string> tmp;
+  228|      0|    tmp = q.top();
+  229|      0|    q.pop();
+  230|      0|    string vert = tmp.second;
+  231|      0|    int cost = tmp.first;
+  232|      0|    if (visitedP.count(vert) != 1) {
+  233|      0|      mst_cost += cost;
+  234|      0|      visitedP[vert] = true;
+  235|      0|      for (auto &s : vertices.at(vert)->connectedVerts) {
+  236|      0|        string adj_str = s.first->label;
+  237|      0|        int adj_int = s.second;
+  238|      0|        if (visited.count(adj_str) != 1) {
+  239|      0|          q.push(make_pair(adj_int, adj_str));
+  240|      0|        }
+  241|      0|      }
+  242|      0|    }
+  243|      0|  }
+  244|      0|  return -1;
+  245|      0|}
+  250|      0|                                 int weight)) const {
+  251|      0|  return -1;
+  252|      0|}
+  258|      0|    cerr << "Failed to open " << filename << endl;
+  259|      0|    return false;
+  260|      0|  }
+   21|      0|void vertexPrinter(const string &s) { globalSS << s; }
+   24|      0|void edgePrinter(const string &from, const string &to, int weight) {
+   25|      0|  globalSS << "[" << from << to << " " << weight << "]";
+   26|      0|}
+   41|      0|  assert(g.add("b") && "add vertex b");
+   42|      0|  assert(g.add("c") && "add vertex c");
+   43|      0|  assert(g.add("d") && "add vertex d");
+   44|      0|  assert(g.add("e") && "add vertex e");
+   45|      0|  assert(!g.add("b") && "b added twice");
+   46|      0|  assert(g.connect("a", "b", 10) && "connect a b");
+   47|      0|  assert(!g.connect("a", "b", 50) && "duplicate connect a b");
+   48|      0|  assert(!g.connect("a", "a", 1) && "connect a to itself");
+   49|      0|  g.connect("a", "d", 40);
+   52|      0|  assert((g.edgesSize() == 3) && "graph number of edges");
+   53|      0|  assert((g.vertexDegree("a") == 3) && "vertex number of edges");
+   54|      0|  assert((g.vertexDegree("c") == 0) && "no outgoing edges c");
+   55|      0|  assert((g.vertexDegree("xxx") == -1) && "no edges for xxx");
+   56|      0|  assert(!g.contains("xxx") && "xxx not in graph");
+   57|      0|  assert(g.contains("a") && "a in graph");
+   60|      0|  assert(g.getEdgesAsString("a") == "b(10),c(20),d(40)");
+   62|      0|  assert(!g.disconnect("a", "e") && "disconnecting non-existent vertex");
+   63|      0|  assert((g.edgesSize() == 3) && "disconnected nonexisting");
+   64|      0|  assert(g.disconnect("a", "c") && "a-c disconnect");
+   65|      0|  assert((g.edgesSize() == 2) && "number of edges after disconnect");
+   66|      0|  assert((g.vertexDegree("a") == 2) && "a has 2 edges");
+   67|      0|  assert(g.getEdgesAsString("a") == "b(10),d(40)" && "removing middle edge");
+   74|      0|    return;
+   75|      0|  }
+   77|      0|  assert(g.contains("B") && "b in graph");
+   78|      0|  assert(g.contains("C") && "c in graph");
+   79|      0|  assert(g.getEdgesAsString("A") == "B(1),C(8)");
+   80|      0|  assert(g.getEdgesAsString("B") == "C(3)");
+   81|      0|  assert(g.getEdgesAsString("C").empty());
+  104|      0|    return;
+  105|      0|  }
+  128|      0|    return;
+  129|      0|  }
+  152|      0|    return;
+  153|      0|  }
+  212|      0|    return;
+  213|      0|  }
+Mon May  1 19:27:19 PDT 2023
+=====================================================
+To create an output.txt file with all the output from this script
+Run the below command
+      ./create-output.sh > output.txt 2>&1 
+=====================================================
